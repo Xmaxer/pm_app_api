@@ -78,7 +78,8 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
-
+  config.action_controller.perform_caching = true
+  config.cache_store = :redis_cache_store, {url: ENV['REDIS_SERVER_URL'], driver: 'hiredis'}
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
@@ -102,4 +103,5 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  #
 end
