@@ -10,18 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_02_175447) do
+ActiveRecord::Schema.define(version: 2020_01_03_122110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: :cascade do |t|
+    t.string "api_key"
+    t.bigint "user_id", null: false
+    t.bigint "company_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["api_key"], name: "index_api_keys_on_api_key", unique: true
+    t.index ["company_id"], name: "index_api_keys_on_company_id"
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
 
   create_table "assets", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.bigint "company_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_assets_on_company_id"
+    t.index ["user_id"], name: "index_assets_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -40,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_01_02_175447) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_company_roles_on_company_id"
-    t.index ["name"], name: "unique_role_name_index", unique: true
+    t.index ["name", "company_id"], name: "unique_role_name_index", unique: true
   end
 
   create_table "user_company_roles", force: :cascade do |t|
@@ -54,20 +68,23 @@ ActiveRecord::Schema.define(version: 2020_01_02_175447) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
+    t.string "first_name", null: false
     t.string "last_name"
     t.string "password_digest"
-    t.string "email"
+    t.string "email", null: false
     t.string "phone_number"
     t.string "secret_key"
-    t.boolean "enabled"
+    t.boolean "enabled", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "unique_email_index", unique: true
     t.index ["phone_number"], name: "unique_phone_number_index", unique: true
   end
 
+  add_foreign_key "api_keys", "companies"
+  add_foreign_key "api_keys", "users"
   add_foreign_key "assets", "companies"
+  add_foreign_key "assets", "users"
   add_foreign_key "companies", "users"
   add_foreign_key "company_roles", "companies"
   add_foreign_key "user_company_roles", "company_roles"

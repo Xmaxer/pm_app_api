@@ -8,6 +8,6 @@ class CreateCompanyRoles < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :company_roles, :name, unique: true, name: "unique_role_name_index"
+    add_index :company_roles, [:name, :company_id], unique: true, name: "unique_role_name_index"
   end
 end
