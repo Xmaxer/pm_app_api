@@ -21,12 +21,11 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
+    return Authentication::Authentication.authenticate_api_key(request.headers['apikey']) if request.headers['apikey']
     return nil if request.headers['Authorization'].blank?
     token = request.headers['Authorization'].split(' ').last
-    #TODO Improve user_id retrieval
-    user_id = request.query_parameters[:user_id]
-    return nil if token.blank? || user_id.nil?
-    user = Authentication::Authentication.authenticate(token, user_id)
+    return nil if token.blank?
+    user = Authentication::Authentication.authenticate(token)
     return nil unless user
     user.current_token = token
     user

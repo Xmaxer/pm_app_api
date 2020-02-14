@@ -6,21 +6,44 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user1 = User.new({first_name: "Kevin", last_name: "Jakubauskas", password: "123456", password_confirmation: "123456", email: "some@place.com", phone_number: "+35311111111"})
-user1.save
+users = []
+(1..50).each { |i|
+  user = User.new({first_name: "User " + i.to_s, last_name: "LUser " + i.to_s, password: "123456", password_confirmation: "123456", email: "user" + i.to_s + "@place.com", phone_number: "+3531111111" + i.to_s})
+  user.save
+  users.push(user)
+}
 
-company1 = user1.companies.new({name: "Company 1", description: "Descp 1"})
-company1.save
+companies = []
+roles = []
+(1..100).each { |i|
+  user = users.sample
+  company = user.companies.new({name: "Company " + i.to_s, description: "Description " + i.to_s})
+  company.save
+  companies.push(company)
+  (1..rand(2..6)).each do |x|
+    role = company.company_roles.new({name: "Role " + x.to_s, colour: "#FFFFFF"})
+    role.save
+    roles.push(role)
+  end
 
-asset1 = company1.assets.new({name: "Asset 1", description: "Asset desc", user_id: user1.id})
-asset1.save
+}
 
-role1 = company1.company_roles.new({name: "Role 1", colour: "xyz"})
-role1.save
+assets = []
+(1..500).each do |i|
+  company = companies.sample
+  asset = company.assets.new({name: "Asset " + i.to_s, description: "Asset desc", user_id: company.user_company_roles.sample.user_id})
+  asset.save
+  assets.push(asset)
+end
 
-user_role1 = user1.user_company_roles.new({company_role_id: role1.id})
-user_role1.save
+(1...100).each do |i|
+  user = users.sample
+  role = roles.sample
+  user_role = user.user_company_roles.new({company_role_id: role.id})
+  user_role.save
+  key = user.api_keys.new({name: "My Api key " + i.to_s, company_id: role.company.id})
+  key.save
+end
 
-key1 = user1.api_keys.new({name: "My Api key", company_id: company1.id})
-key1.save
+
 

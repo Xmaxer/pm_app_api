@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_122110) do
+ActiveRecord::Schema.define(version: 2020_02_14_150141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "api_keys", force: :cascade do |t|
-    t.string "api_key"
+    t.string "api_key", null: false
     t.bigint "user_id", null: false
     t.bigint "company_id", null: false
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["api_key"], name: "index_api_keys_on_api_key", unique: true
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_122110) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["company_id"], name: "index_assets_on_company_id"
     t.index ["user_id"], name: "index_assets_on_user_id"
   end
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_122110) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
@@ -60,8 +62,10 @@ ActiveRecord::Schema.define(version: 2020_01_03_122110) do
   create_table "user_company_roles", force: :cascade do |t|
     t.bigint "company_role_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_user_company_roles_on_company_id"
     t.index ["company_role_id", "user_id"], name: "unique_user_company_role_index", unique: true
     t.index ["company_role_id"], name: "index_user_company_roles_on_company_role_id"
     t.index ["user_id"], name: "index_user_company_roles_on_user_id"
@@ -87,6 +91,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_122110) do
   add_foreign_key "assets", "users"
   add_foreign_key "companies", "users"
   add_foreign_key "company_roles", "companies"
+  add_foreign_key "user_company_roles", "companies"
   add_foreign_key "user_company_roles", "company_roles"
   add_foreign_key "user_company_roles", "users"
 end

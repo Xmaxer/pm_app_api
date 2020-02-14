@@ -1,11 +1,29 @@
 module Authentication
   class Authentication
     class << self
-      def get_token(user)
-        JsonWebToken.encode({user_id: user.id}, user.get_decrypted_secret_key)
+      def decode_base64(string)
+        begin
+          decoded = Base64.strict_decode64(string).split(':')
+          user_id = decoded.first
+          token = decoded.last
+          [user_id, token]
+        rescue
+          [nil, nil]
+        end
       end
 
-      def authenticate(token, user_id)
+      def encode_base64(user)
+        token = JsonWebToken.encode({user_id: user.id}, user.get_decrypted_secret_key).to_s
+        Base64.strict_encode64(user.id.to_s + ":" + token)
+      end
+
+      def get_encoded_string(user)
+        encode_base64(user)
+      end
+
+      def authenticate(encoded_string)
+        #TODO Only authorize if coming from frontend server, otherwise deny
+        user_id, token = decode_base64(encoded_string)
         user = User.find_by(id: user_id)
         return nil unless user
         secret_key = user.get_decrypted_secret_key
@@ -14,7 +32,12 @@ module Authentication
         user
       end
 
-      def logout(token, user_id)
+      def authenticate_api_key(api_key)
+        ApiKey.find_by(api_key: api_key)
+      end
+
+      def logout(encoded_string)
+        user_id, token = decode_base64(encoded_string)
         user = User.find_by(id: user_id)
         return false unless user
         secret_key = user.get_decrypted_secret_key

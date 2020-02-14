@@ -11,7 +11,7 @@ module Mutations
         if user.valid? && user.save
           return {user: user}
         end
-        Exceptions::ExceptionHandler.to_graphql_execution_error_array(user.errors).each {|error| context.add_error(error)}
+        Exceptions::ExceptionHandler.to_graphql_execution_error_array(user.errors).each { |error| context.add_error(error) }
         {user: nil}
       end
     end

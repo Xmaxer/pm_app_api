@@ -6,7 +6,7 @@ module Resolvers
     type Types::CustomTypes::CompanyTypes::CompanyType, null: true
 
     def resolve(company_id:)
-      Company.find_by(id: company_id)
+      Company.find_by(id: company_id, deleted: false)
     end
   end
 end

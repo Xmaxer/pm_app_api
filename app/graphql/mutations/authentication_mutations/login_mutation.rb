@@ -15,7 +15,7 @@ module Mutations
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::AUTHENTICATION_EMAIL_INVALID_ERROR) unless user
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::AUTHENTICATION_PASSWORD_INVALID_ERROR) unless user.authenticate(auth_details[:password])
 
-        {token: Authentication::Authentication.get_token(user)}
+        {token: Authentication::Authentication.get_encoded_string(user)}
       end
     end
   end

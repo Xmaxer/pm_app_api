@@ -3,6 +3,7 @@ class CreateUserCompanyRoles < ActiveRecord::Migration[6.0]
     create_table :user_company_roles do |t|
       t.references :company_role, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
+      t.references :company, null: false, foreign_key: true
 
       t.timestamps
     end

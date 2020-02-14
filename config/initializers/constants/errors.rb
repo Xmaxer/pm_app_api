@@ -31,6 +31,7 @@ module Constants
 
     COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 111, message: "%{count} is the maximum length"}
 
+    NOT_COMPANY_OWNER = {code: 120, message: "You must be the company owner."}
     COMPANY_ROLE_COLOUR_INVALID_ERROR = {code: 200, message: "%{value} is not a valid HEX colour code"}
 
     COMPANY_ROLE_NAME_TOO_LONG_ERROR = {code: 210, message: "%{count} is the maximum length"}

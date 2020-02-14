@@ -5,7 +5,7 @@ module Mutations
       field :success, Boolean, null: false, description: "True if logged out of all devices"
 
       def resolve
-        {success: Authentication::Authentication.logout_all(context[:current_user]) }
+        {success: Authentication::Authentication.logout_all(context[:current_user])}
       end
     end
   end
