@@ -9,5 +9,8 @@ module Types
     field :asset, mutation: Mutations::AssetMutations::AssetMutation
     field :delete_asset, mutation: Mutations::AssetMutations::DeleteAssetMutation
     field :delete_company, mutation: Mutations::CompanyMutations::DeleteCompanyMutation
+    field :add_role, mutation: Mutations::UserMutations::AddUserToCompanyMutation
+    field :remove_role, mutation: Mutations::UserMutations::RemoveUserFromCompanyMutation
+
   end
 end

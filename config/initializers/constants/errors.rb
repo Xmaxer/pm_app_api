@@ -15,6 +15,9 @@ module Constants
 
     USER_LAST_NAME_TOO_LONG_ERROR = {code: 60, message: "%{count} is the maximum length"}
     USER_LAST_NAME_TOO_SHORT_ERROR = {code: 61, message: "%{count} is the minimum length"}
+    USER_DOES_NOT_EXIST_ERROR = {code: 70, message: "User doesn't exist"}
+
+    USER_IS_COMPANY_OWNER_ERROR = {code: 71, message: "Cannot remove the company owner"}
 
     AUTHENTICATION_EMAIL_INVALID_ERROR = {code: 40, message: "Invalid email"}
     AUTHENTICATION_PASSWORD_INVALID_ERROR = {code: 41, message: "Invalid password"}
@@ -31,7 +34,10 @@ module Constants
 
     COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 111, message: "%{count} is the maximum length"}
 
-    NOT_COMPANY_OWNER = {code: 120, message: "You must be the company owner."}
+
+    NOT_COMPANY_OWNER_ERROR = {code: 120, message: "You must be the company owner."}
+    COMPANY_DOES_NOT_EXIST_ERROR = {code: 121, message: "Company doesn't exist"}
+    COMPANY_ROLE_DOES_NOT_EXIST_ERROR = {code: 122, message: "Company role doesn't exist."}
     COMPANY_ROLE_COLOUR_INVALID_ERROR = {code: 200, message: "%{value} is not a valid HEX colour code"}
 
     COMPANY_ROLE_NAME_TOO_LONG_ERROR = {code: 210, message: "%{count} is the maximum length"}

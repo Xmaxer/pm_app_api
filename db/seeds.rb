@@ -17,7 +17,7 @@ companies = []
 roles = []
 (1..100).each { |i|
   user = users.sample
-  company = user.companies.new({name: "Company " + i.to_s, description: "Description " + i.to_s})
+  company = user.user_company_roles.build.build_company({name: "Company " + i.to_s, description: "Description " + i.to_s, user: user})
   company.save
   companies.push(company)
   (1..rand(2..6)).each do |x|
@@ -39,7 +39,7 @@ end
 (1...100).each do |i|
   user = users.sample
   role = roles.sample
-  user_role = user.user_company_roles.new({company_role_id: role.id})
+  user_role = user.user_company_roles.new({company_role_id: role.id, company: role.company})
   user_role.save
   key = user.api_keys.new({name: "My Api key " + i.to_s, company_id: role.company.id})
   key.save

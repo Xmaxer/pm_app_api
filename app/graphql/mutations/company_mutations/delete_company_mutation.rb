@@ -13,7 +13,7 @@ module Mutations
 
         #Ensure user is TRUE company owner (Regardless of role)
         if !company.nil? and company.user_id != args[:user_id]
-          raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::NOT_COMPANY_OWNER)
+          raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::NOT_COMPANY_OWNER_ERROR)
         end
         return {company: company} if !company.nil? && company.update_attribute(:deleted, true)
         {company: nil}
