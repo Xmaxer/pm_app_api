@@ -19,6 +19,8 @@ gem 'redis', '~> 4.1', '>= 4.1.3'
 gem 'jwt', '~> 2.2', '>= 2.2.1'
 gem 'hiredis', '~> 0.6.3'
 gem 'bcrypt', '~> 3.1', '>= 3.1.13'
+gem 'rack-cors'
+gem 'search_object_graphql', '~> 0.3.1'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -4,5 +4,7 @@ module Types
     field :user, resolver: Resolvers::UserResolver
     field :company, resolver: Resolvers::CompanyResolver
     field :asset, resolver: Resolvers::AssetResolver
+    field :is_authenticated, resolver: Resolvers::AuthenticatedResolver
+    field :companies, resolver: Resolvers::CompaniesResolver
   end
 end
