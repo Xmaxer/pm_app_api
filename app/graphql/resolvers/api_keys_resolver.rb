@@ -1,5 +1,5 @@
 module Resolvers
-  class CompaniesResolver < Types::BaseResolverAuthenticable
+  class ApiKeysResolver < Types::BaseResolverAuthenticable
     require 'search_object'
     require 'search_object/plugin/graphql'
     include SearchObject.module(:graphql)
@@ -10,16 +10,16 @@ module Resolvers
     end
 
 
-    description "Gets a list of companies belonging to user"
+    description "Gets a list of API keys accessible to the user"
 
-    scope { context[:current_user].companies.select("companies.*, COUNT(assets.id) as number_of_assets").left_outer_joins(:assets).group(:id) }
+    scope { context[:current_user].companies.joins(:api_keys).select("api_keys.*, companies.name as company_name") }
 
-    option :filter, type: Types::CustomTypes::CompanyTypes::CompanyFilterType, with: :apply_filter
-    option :order, type: Types::CustomTypes::CompanyTypes::CompanyOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order
+    option :filter, type: Types::CustomTypes::ApiKeyTypes::ApiKeysFilterType, with: :apply_filter
+    option :order, type: Types::CustomTypes::ApiKeyTypes::ApiKeysOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order
     option :first, type: Int, default: 10, with: :apply_first
     option :skip, type: Int, default: 0, with: :apply_skip
 
-    type [Types::CustomTypes::CompanyTypes::CompanyType], null: true
+    type [Types::CustomTypes::ApiKeyTypes::ApiKeyType], null: true
 
     def apply_order(scope, value)
       scope.order(value[:by].downcase.to_sym => value[:direction].downcase.to_sym)
