@@ -13,6 +13,7 @@ class Company < ApplicationRecord
   private
 
   def create_default_role
-    self.user_company_roles.create(user_id: self.user_id)
+    role = self.company_roles.create
+    role.user_company_roles.create(user_id: self.user_id, company_id: self.id)
   end
 end

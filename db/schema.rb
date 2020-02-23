@@ -51,24 +51,24 @@ ActiveRecord::Schema.define(version: 2020_02_14_150141) do
 
   create_table "company_roles", force: :cascade do |t|
     t.string "name"
-    t.string "colour"
+    t.string "colour", null: false
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_company_roles_on_company_id"
-    t.index ["name", "company_id"], name: "unique_role_name_index", unique: true
+    t.index ["company_id"], name: "unique_role_name_null_index", unique: true, where: "(name IS NULL)"
+    t.index ["name", "company_id"], name: "unique_role_name_index", unique: true, where: "(name IS NOT NULL)"
   end
 
   create_table "user_company_roles", force: :cascade do |t|
-    t.bigint "company_role_id"
+    t.bigint "company_role_id", null: false
     t.bigint "user_id", null: false
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_user_company_roles_on_company_id"
-    t.index ["company_role_id", "user_id", "company_id"], name: "unique_user_company_role_index", unique: true, where: "(company_role_id IS NOT NULL)"
+    t.index ["company_role_id", "user_id", "company_id"], name: "unique_user_company_role_index", unique: true
     t.index ["company_role_id"], name: "index_user_company_roles_on_company_role_id"
-    t.index ["user_id", "company_id"], name: "unique_user_company_index", unique: true, where: "(company_role_id IS NULL)"
     t.index ["user_id"], name: "index_user_company_roles_on_user_id"
   end
 

@@ -6,6 +6,8 @@ module Types
         field :name, String, null: false, description: "The company's name"
         field :description, String, null: true, description: "The company's description"
         field :number_of_assets, Int, null: false, description: "The number of assets the company has"
+        field :assets, resolver: Resolvers::AssetsResolver
+        field :users, resolver: Resolvers::UsersResolver
       end
     end
   end

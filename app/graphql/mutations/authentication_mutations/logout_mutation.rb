@@ -5,8 +5,7 @@ module Mutations
       field :success, Boolean, null: false, description: "True if logged out of current session"
 
       def resolve
-        user = context[:current_user]
-        {success: Authentication::Authentication.logout(user.current_token, user.id)}
+        {success: Authentication::Authentication.logout(context[:current_user].current_token)}
       end
     end
   end

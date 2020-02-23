@@ -2,7 +2,6 @@ module Types
   class BaseResolverAuthenticable < BaseResolver
 
     def initialize(object:, context:, field:)
-      byebug
       super(object: object, context: context, field: field)
       raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::NOT_AUTHENTICATED_ERROR) unless context[:current_user]
     end

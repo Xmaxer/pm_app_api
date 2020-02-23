@@ -7,5 +7,6 @@ module Types
     field :is_authenticated, resolver: Resolvers::AuthenticatedResolver
     field :companies, resolver: Resolvers::CompaniesResolver
     field :api_keys, resolver: Resolvers::ApiKeysResolver
+    field :assets, resolver: Resolvers::AssetsResolver
   end
 end
