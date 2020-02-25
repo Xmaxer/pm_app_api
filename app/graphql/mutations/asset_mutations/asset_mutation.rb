@@ -10,7 +10,7 @@ module Mutations
       def resolve(**args)
         args[:user_id] = context[:current_user].id
         asset = Asset.find_or_initialize_by(id: args[:asset_details][:id])
-        attrs = args[:asset_details]
+        attrs = args[:asset_details].to_h
         if asset.new_record?
           attrs[:user_id] = args[:user_id]
           asset = Asset.new(attrs)
