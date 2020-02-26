@@ -21,6 +21,8 @@ gem 'hiredis', '~> 0.6.3'
 gem 'bcrypt', '~> 3.1', '>= 3.1.13'
 gem 'rack-cors'
 gem 'search_object_graphql', '~> 0.3.1'
+gem 'influxdb', '~> 0.8.0'
+gem 'apollo_upload_server', '~> 2.0', '>= 2.0.1'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
