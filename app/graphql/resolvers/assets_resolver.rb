@@ -19,7 +19,7 @@ module Resolvers
     option :company_id, type: ID, with: :by_company
 
     scope do
-      object.nil? ? Asset.all : object.assets
+      object.nil? ? Asset.all : object.assets.where(deleted: false)
     end
 
     type [Types::CustomTypes::AssetTypes::AssetType], null: true

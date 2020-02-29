@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   has_many :user_company_roles
   has_many :api_keys
-  has_many :assets
   has_many :companies, through: :user_company_roles
+  has_many :assets, through: :companies
 
   validates :email, format: {with: /(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})/i, message: Constants::Errors::USER_EMAIL_NOT_VALID_ERROR}, presence: {message: Constants::Errors::USER_EMAIL_NOT_PRESENT_ERROR}, uniqueness: {message: Constants::Errors::USER_EMAIL_NOT_UNIQUE_ERROR, case_sensitive: false}
   validates :first_name, length: {in: 2..30, too_long: Constants::Errors::USER_FIRST_NAME_TOO_LONG_ERROR, too_short: Constants::Errors::USER_FIRST_NAME_TOO_SHORT_ERROR}, presence: {message: Constants::Errors::USER_FIRST_NAME_NOT_PRESENT_ERROR}

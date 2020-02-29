@@ -12,7 +12,7 @@ module Resolvers
 
     description "Gets a list of companies belonging to user"
 
-    scope { context[:current_user].companies.select("companies.*, COUNT(assets.id) as number_of_assets").where(deleted: false).left_outer_joins(:assets).group(:id) }
+    scope { context[:current_user].companies.where(deleted: false) }
 
     option :filter, type: Types::CustomTypes::CompanyTypes::CompanyFilterType, with: :apply_filter
     option :order, type: Types::CustomTypes::CompanyTypes::CompanyOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order
