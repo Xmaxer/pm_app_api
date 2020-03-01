@@ -46,11 +46,16 @@ module Constants
     ASSET_NAME_TOO_LONG_ERROR = {code: 300, message: "%{count} is the maximum length"}
     ASSET_NAME_TOO_SHORT_ERROR = {code: 301, message: "%{count} is the minimum length"}
     ASSET_NAME_NOT_PRESENT_ERROR = {code: 302, message: "Not present"}
+    ASSET_NOT_FOUND_ERROR = {code: 303, message: "Asset not found"}
 
     ASSET_DESCRIPTION_TOO_LONG_ERROR = {code: 310, message: "%{count} is the maximum length"}
 
     API_KEY_NAME_TOO_LONG_ERROR = {code: 400, message: "%{count} is the maximum length"}
     API_KEY_NAME_NOT_PRESENT_ERROR = {code: 401, message: "Not present"}
+
+    FILE_NOT_VALID_ERROR = {code: 500, message: "File type is invalid"}
+    HEADERS_NOT_SET_ERROR = {code: 501, message: "Headers are not correctly set"}
+    COLUMNS_NOT_DEFINED_ERROR = {code: 502, message: "Columns are not properly defined"}
 
 =begin
     START_DATE_GREATER_THAN_END_DATE_ERROR = {code: 80, message: "End date greater than start date"}
