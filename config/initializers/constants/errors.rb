@@ -47,6 +47,9 @@ module Constants
     ASSET_NAME_TOO_SHORT_ERROR = {code: 301, message: "%{count} is the minimum length"}
     ASSET_NAME_NOT_PRESENT_ERROR = {code: 302, message: "Not present"}
     ASSET_NOT_FOUND_ERROR = {code: 303, message: "Asset not found"}
+    ALGORITHM_NOT_FOUND_ERROR = {code: 304, message: "Algorithm was not found for this asset"}
+    WRONG_NUMBER_OF_FEATURES_ERROR = {code: 305, message: "Not enough number of features found"}
+    WRONG_FEATURE_FORMAT_ERROR = {code: 306, message: "Features should be an array"}
 
     ASSET_DESCRIPTION_TOO_LONG_ERROR = {code: 310, message: "%{count} is the maximum length"}
 

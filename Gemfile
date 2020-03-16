@@ -24,6 +24,7 @@ gem 'search_object_graphql', '~> 0.3.1'
 gem 'influxdb', '~> 0.8.0'
 gem 'apollo_upload_server', '~> 2.0', '>= 2.0.1'
 gem 'sidekiq', '~> 6.0', '>= 6.0.5'
+gem 'grpc', '~> 1.28.0.pre2'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -38,7 +38,8 @@ ActiveRecord::Schema.define(version: 2020_03_14_153438) do
 
   create_table "algorithms", force: :cascade do |t|
     t.bigint "asset_id", null: false
-    t.string "name"
+    t.string "name", null: false
+    t.integer "expected_features", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["asset_id"], name: "index_algorithms_on_asset_id"

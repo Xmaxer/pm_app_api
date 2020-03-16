@@ -12,5 +12,6 @@ module Types
     field :add_role, mutation: Mutations::UserMutations::AddUserToCompanyMutation
     field :remove_role, mutation: Mutations::UserMutations::RemoveUserFromCompanyMutation
     field :upload_asset_data, mutation: Mutations::AssetMutations::UploadAssetDataMutation
+    field :send_asset_data, mutation: Mutations::AssetMutations::SendDataMutation
   end
 end
