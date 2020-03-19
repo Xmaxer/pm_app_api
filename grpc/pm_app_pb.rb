@@ -11,8 +11,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "pm_app.DataPoint" do
       repeated :data, :string, 1
       optional :id, :int32, 2
+      optional :settings, :string, 3
     end
     add_message "pm_app.ResultDataPoint" do
+      repeated :data, :string, 1
+      optional :id, :int32, 2
     end
     add_message "pm_app.Success" do
       optional :success, :bool, 1

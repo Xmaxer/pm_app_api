@@ -4,6 +4,7 @@ class CreateAlgorithms < ActiveRecord::Migration[6.0]
       t.references :asset, null: false, foreign_key: true
       t.string :name, null: false
       t.integer :expected_features, null: false
+      t.jsonb :settings, null: false, default: '{}'
 
       t.timestamps
     end

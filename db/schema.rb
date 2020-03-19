@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_153438) do
     t.bigint "asset_id", null: false
     t.string "name", null: false
     t.integer "expected_features", null: false
+    t.jsonb "settings", default: "{}", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["asset_id"], name: "index_algorithms_on_asset_id"

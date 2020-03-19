@@ -6,6 +6,7 @@ module Mutations
       argument :asset_id, ID, required: true
       argument :headers, [String], required: true
       argument :column_types, Types::CustomTypes::GenericTypes::ColumnTypesArgumentType, required: true
+      argument :separator, String, required: true
 
       field :success, Boolean, null: false
 
@@ -39,6 +40,11 @@ module Mutations
           res = asset.files.attach(io: file.to_io, filename: file.original_filename)
         end
 
+        features = args[:column_types][:features]
+        labels = args[:column_types][:labels]
+        remove = args[:column_types][:remove]
+
+        Algorithm.create({asset: asset, name: "Asset " + args[:asset_id].to_s + " algorithm", expected_features: features.size, settings: {features: features, to_ignore: remove, labels: labels, separator: args[:separator].to_s}}) if asset.algorithm.nil?
         # SendToInfluxJob.perform_later(asset, args[:headers], args[:column_types].to_h)
         {success: !res.nil?}
       end

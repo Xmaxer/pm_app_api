@@ -16,6 +16,7 @@ module PmApp
 
       rpc :GetData, AssetDetails, stream(DataPoint)
       rpc :SendData, DataPoint, Empty
+      rpc :SaveData, ResultDataPoint, Empty
     end
 
     Stub = Service.rpc_stub_class
