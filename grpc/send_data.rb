@@ -1,3 +1,5 @@
+# DEPRECATED
+
 require 'grpc'
 require_relative 'pm_app_services_pb'
 

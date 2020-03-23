@@ -15,7 +15,7 @@ module PmApp
       self.service_name = 'pm_app.PMApp'
 
       rpc :GetData, AssetDetails, stream(DataPoint)
-      rpc :SendData, DataPoint, Empty
+      rpc :SendData, stream(DataPoint), Empty
       rpc :SaveData, ResultDataPoint, Empty
     end
 

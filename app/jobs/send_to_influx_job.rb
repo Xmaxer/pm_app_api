@@ -2,7 +2,7 @@ class SendToInfluxJob < ApplicationJob
   queue_as :default
   require 'influxdb'
 
-  def perform(asset, headers, column_types)
+  def perform(asset, headers, settings)
     puts "STARTING JOB"
     influx = InfluxDB::Client.new "asset_data", async: true
     c = 1
