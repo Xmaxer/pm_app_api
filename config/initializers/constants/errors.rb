@@ -60,6 +60,8 @@ module Constants
     HEADERS_NOT_SET_ERROR = {code: 501, message: "Headers are not correctly set"}
     COLUMNS_NOT_DEFINED_ERROR = {code: 502, message: "Columns are not properly defined"}
 
+    GRAFANA_DASHBOARD_FAILED = {code: 600, message: "Failed to create a Grafana dashboard"}
+
 =begin
     START_DATE_GREATER_THAN_END_DATE_ERROR = {code: 80, message: "End date greater than start date"}
     STARTING_AMOUNT_GREATER_THAN_ENDING_AMOUNT_ERROR = {code: 81, message: "Starting amount cannot be greater than ending amount"}
