@@ -20,6 +20,7 @@ roles = []
   company = user.user_company_roles.build.build_company({name: "Company " + i.to_s, description: "Description " + i.to_s, user: user})
   company.save
   companies.push(company)
+  Grafana::GrafanaAPI.create_dashboard(company.name, company.id)
   (1..rand(2..6)).each do |x|
     role = company.company_roles.new({name: "Role " + x.to_s, colour: "#FFFFFF"})
     role.save

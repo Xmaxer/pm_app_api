@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../docker/.idea/docker.iml" filepath="$PROJECT_DIR$/../../docker/.idea/docker.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pm_app_api.iml" filepath="$PROJECT_DIR$/.idea/pm_app_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../docker/pm_app_docker/.idea/pm_app_docker.iml" filepath="$PROJECT_DIR$/../../docker/pm_app_docker/.idea/pm_app_docker.iml" />
     </modules>
   </component>
 </project>
