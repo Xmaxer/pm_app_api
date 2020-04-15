@@ -36,11 +36,11 @@ development:
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  #host: <%= ENV['POSTGRES_HOST'] %>
+#  host: <%#= ENV['POSTGRES_HOST'] %>
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  #port: <%= ENV['POSTGRES_PORT'] %>
+#  port: <%#= ENV['POSTGRES_PORT'] %>
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -57,8 +57,8 @@ development:
 test:
   <<: *default
   database: pm_app_api_test
-#  username: <%#= ENV['DATABASE_USERNAME'] %>
-#  password: <%#= ENV['DATABASE_PASSWORD'] %>
+#  username: <%#= ENV['POSTGRES_DATABASE_USERNAME'] %>
+#  password: <%#= ENV['POSTGRES_DATABASE_PASSWORD'] %>
 #  host: localhost
 #  port: 5432
 # As with config/credentials.yml, you never want to store sensitive information,
