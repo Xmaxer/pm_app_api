@@ -6,7 +6,4 @@ COPY . /pm_app_api
 ADD https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh /pm_app_api
 RUN bundle install
 
-COPY wait-for-it.sh /pm_app_api/
-RUN ["chmod", "777", "./wait-for-it.sh"]
-
-CMD ["./wait-for-it.sh", "-t", "0", "-h", "postgres", "--", "./entrypoint.sh"]
+CMD ["./entrypoint.sh"]
