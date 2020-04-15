@@ -15,7 +15,7 @@ Rails.application.configure do
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_cache_store, {url: ENV['REDIS_HOST'] + " " + ENV["REDIS_PORT"], driver: 'hiredis'}
+  config.cache_store = :redis_cache_store, {url: ENV['REDIS_URL'], driver: 'hiredis'}
   config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
   }

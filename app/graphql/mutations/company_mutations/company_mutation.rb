@@ -8,16 +8,11 @@ module Mutations
       field :company, Types::CustomTypes::CompanyTypes::CompanyType, null: true, description: "The newly created company, null otherwise"
 
       def resolve(**args)
-
-
-        dashboard_url = response["url"]
-
         args[:user_id] = context[:current_user].id
         company = Company.find_or_initialize_by(id: args[:company_details][:id])
         attrs = args[:company_details].to_h.except(:id)
         if company.new_record?
           attrs[:user_id] = args[:user_id]
-          attrs[:dashboard_url] = dashboard_url
           company = Company.new(attrs)
         else
           company.attributes = attrs
@@ -26,10 +21,10 @@ module Mutations
         Exceptions::ExceptionHandler.to_graphql_execution_error_array(company.errors).each { |error| context.add_error(error) } unless company.valid? && company.save
         return {company: nil} if company.id.nil?
 
-        success = Grafana::GrafanaAPI.create_dashboard(company.name, company.id)
+        success = Grafana::GrafanaApi.create_dashboard(company)
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::GRAFANA_DASHBOARD_FAILED) unless success
 
-        {company: company}
+        {company: Company.find_by(id: company.id)}
       end
     end
   end

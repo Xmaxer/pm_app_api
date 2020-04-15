@@ -6,8 +6,9 @@ module Resolvers
     type Types::CustomTypes::CompanyTypes::CompanyType, null: true
 
     def resolve(company_id:)
-      company = context[:current_user].companies.where(id: company_id, deleted: false).select("companies.*, COUNT(assets.id) as number_of_assets").left_outer_joins(:assets).group(:id)
-      if company.nil? or company.empty? then nil else company[0] end
+      company = context[:current_user].companies.where(id: company_id, deleted: false).select("companies.*, COUNT(assets.id) as number_of_assets").left_outer_joins(:assets).group(:id).first
+      Grafana::GrafanaAPI.create_dashboard(company) if !company.nil? and company[:dashboard_url].nil?
+      if company.nil? then nil else company end
     end
   end
 end
