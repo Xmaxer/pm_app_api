@@ -1,6 +1,6 @@
 module Mutations
   module AssetMutations
-    class SendDataMutation < BaseMutationAuthenticable
+    class SendDataMutation < BaseMutationApiAuth
       description "Sends a datapoint related to the asset"
 
       argument :asset_id, ID, required: true, description: "Valid asset ID"
@@ -8,9 +8,8 @@ module Mutations
       field :success, Boolean, null: false, description: "Whether or not the data was sent successfully"
 
       def resolve(**args)
-
-        user = context[:current_user]
-        asset = user.assets.find_by(id: args[:asset_id])
+        company = object
+        asset = company.assets.find_by(id: args[:asset_id])
 
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ASSET_NOT_FOUND_ERROR) if asset.nil?
 

@@ -9,7 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-        current_user: current_user
+        current_user: current_user,
+        api_key: api_key
     }
     result = PmAppApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -21,7 +22,7 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return Authentication::Authentication.authenticate_api_key(request.headers['apikey']) if request.headers['apikey']
+
     return nil if request.headers['Authorization'].blank?
     token = request.headers['Authorization'].split(' ').last
     return nil if token.blank?
@@ -29,6 +30,11 @@ class GraphqlController < ApplicationController
     return nil unless user
     user.current_token = token
     user
+  end
+
+  def api_key
+    return Authentication::Authentication.authenticate_api_key(request.headers['apikey']) if request.headers['apikey']
+    nil
   end
 
   # Handle form data, JSON body, or a blank value
