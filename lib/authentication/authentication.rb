@@ -33,7 +33,7 @@ module Authentication
       end
 
       def authenticate_api_key(api_key)
-        ApiKey.find_by(api_key: api_key)
+        ApiKey.find_by(api_key: api_key, deleted: false)
       end
 
       def logout(encoded_string)

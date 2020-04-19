@@ -10,7 +10,7 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
         current_user: current_user,
-        api_key: api_key
+        api_key: api_key(query)
     }
     result = PmAppApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -32,8 +32,12 @@ class GraphqlController < ApplicationController
     user
   end
 
-  def api_key
-    return Authentication::Authentication.authenticate_api_key(request.headers['apikey']) if request.headers['apikey']
+  def api_key(query)
+    if request.headers['apikey']
+      key = Authentication::Authentication.authenticate_api_key(request.headers['apikey'])
+      ApiKeyHistory.create(api_key: key, query: query)
+      return key
+    end
     nil
   end
 
