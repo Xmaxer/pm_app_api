@@ -15,10 +15,9 @@ module Mutations
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ASSET_NOT_FOUND_ERROR) if asset.nil?
 
         algorithm = asset.algorithm
-        separator = algorithm[:settings].to_h["separator"]
 
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ALGORITHM_NOT_FOUND_ERROR) if algorithm.nil?
-
+        separator = algorithm[:settings].to_h["separator"]
         args[:data].each do |d|
           size = d.strip.split(separator).size
           raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::WRONG_NUMBER_OF_FEATURES_ERROR) if size < algorithm[:expected_features]

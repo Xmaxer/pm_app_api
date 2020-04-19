@@ -11,6 +11,7 @@ module Types
         field :number_of_assets, resolver: Resolvers::NumberOfAssetsResolver, null: false, description: "The number of assets the company has"
         field :assets, resolver: Resolvers::AssetsResolver
         field :users, resolver: Resolvers::UsersResolver
+        field :total_size, resolver: Resolvers::TotalCompanyDataSizeResolver
       end
     end
   end

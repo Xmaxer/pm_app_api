@@ -18,34 +18,25 @@ module Mutations
         files.each do |file|
           raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::FILE_NOT_VALID_ERROR) unless valid_file_types.include?(file.content_type)
         end
-
-        # number_of_columns = 0
-        #
-        # File.foreach(file.to_io) do |line|
-        #   split = line.strip.split
-        #   number_of_columns = split.size
-        #   raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::HEADERS_NOT_SET_ERROR) if split.size != args[:headers].size
-        #   break
-        # end
-        #
-        # defined = args[:column_types][:remove].size + args[:column_types][:labels].size + args[:column_types][:features].size
-        # raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::COLUMNS_NOT_DEFINED_ERROR) if defined != number_of_columns
-
+        
         asset = context[:current_user].assets.find_by(id: args[:asset_id])
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ASSET_NOT_FOUND_ERROR) if asset.nil?
 
         res = nil
+        extra = !asset.files.attachments.empty?
 
         files.each do |file|
           res = asset.files.attach(io: file.to_io, filename: file.original_filename)
         end
 
-        features = args[:column_types][:features]
-        labels = args[:column_types][:labels]
-        remove = args[:column_types][:remove]
+        unless extra
+          features = args[:column_types][:features]
+          labels = args[:column_types][:labels]
+          remove = args[:column_types][:remove]
 
-        Algorithm.create({asset: asset, name: "Asset " + args[:asset_id].to_s + " algorithm", expected_features: features.size, settings: {features: features, to_ignore: remove, labels: labels, separator: args[:separator].to_s}}) if asset.algorithm.nil?
-        # SendToInfluxJob.perform_later(asset, args[:headers], args[:column_types].to_h)
+          Algorithm.create({asset: asset, name: "Asset " + args[:asset_id].to_s + " algorithm", expected_features: features.size, settings: {features: features, to_ignore: remove, labels: labels, separator: args[:separator].to_s}}) if asset.algorithm.nil?
+        end
+
         {success: !res.nil?}
       end
     end
