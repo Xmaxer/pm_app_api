@@ -6,15 +6,15 @@ module Constants
     USER_EMAIL_NOT_VALID_ERROR = {code: 22, message: "%{value} is not a valid"}
 
     USER_PASSWORD_NOT_PRESENT_ERROR = {code: 30, message: "Not present"}
-    USER_PASSWORD_TOO_LONG_ERROR = {code: 31, message: "%{count} is the maximum length"}
-    USER_PASSWORD_TOO_SHORT_ERROR = {code: 33, message: "%{count} is the minimum length"}
+    USER_PASSWORD_TOO_LONG_ERROR = {code: 31, message: "%{count} is the maximum password length"}
+    USER_PASSWORD_TOO_SHORT_ERROR = {code: 33, message: "%{count} is the minimum password length"}
 
     USER_FIRST_NAME_NOT_PRESENT_ERROR = {code: 70, message: "Not present"}
-    USER_FIRST_NAME_TOO_LONG_ERROR = {code: 71, message: "%{count} is the maximum length"}
-    USER_FIRST_NAME_TOO_SHORT_ERROR = {code: 72, message: "%{count} is the minimum length"}
+    USER_FIRST_NAME_TOO_LONG_ERROR = {code: 71, message: "%{count} is the maximum first name length"}
+    USER_FIRST_NAME_TOO_SHORT_ERROR = {code: 72, message: "%{count} is the minimum first name length"}
 
-    USER_LAST_NAME_TOO_LONG_ERROR = {code: 60, message: "%{count} is the maximum length"}
-    USER_LAST_NAME_TOO_SHORT_ERROR = {code: 61, message: "%{count} is the minimum length"}
+    USER_LAST_NAME_TOO_LONG_ERROR = {code: 60, message: "%{count} is the maximum last name length"}
+    USER_LAST_NAME_TOO_SHORT_ERROR = {code: 61, message: "%{count} is the minimum last name length"}
     USER_DOES_NOT_EXIST_ERROR = {code: 70, message: "User doesn't exist"}
 
     USER_IS_COMPANY_OWNER_ERROR = {code: 71, message: "Cannot remove the company owner"}
@@ -26,13 +26,13 @@ module Constants
 
     NOT_AUTHENTICATED_ERROR = {code: -1, message: "Not authenticated"}
 
-    COMPANY_NAME_TOO_LONG_ERROR = {code: 100, message: "%{count} is the maximum length"}
-    COMPANY_NAME_TOO_SHORT_ERROR = {code: 101, message: "%{count} is the minimum length"}
+    COMPANY_NAME_TOO_LONG_ERROR = {code: 100, message: "%{count} is the maximum company name length"}
+    COMPANY_NAME_TOO_SHORT_ERROR = {code: 101, message: "%{count} is the minimum company name length"}
     COMPANY_NAME_NOT_PRESENT_ERROR = {code: 102, message: "Not present"}
 
-    COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 110, message: "%{count} is the maximum length"}
+    COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 110, message: "%{count} is the maximum company description length"}
 
-    COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 111, message: "%{count} is the maximum length"}
+    COMPANY_DESCRIPTION_TOO_LONG_ERROR = {code: 111, message: "%{count} is the maximum company description length"}
 
 
     NOT_COMPANY_OWNER_ERROR = {code: 120, message: "You must be the company owner."}
@@ -40,20 +40,20 @@ module Constants
     COMPANY_ROLE_DOES_NOT_EXIST_ERROR = {code: 122, message: "Company role doesn't exist."}
     COMPANY_ROLE_COLOUR_INVALID_ERROR = {code: 200, message: "%{value} is not a valid HEX colour code"}
 
-    COMPANY_ROLE_NAME_TOO_LONG_ERROR = {code: 210, message: "%{count} is the maximum length"}
+    COMPANY_ROLE_NAME_TOO_LONG_ERROR = {code: 210, message: "%{count} is the maximum role name length"}
     COMPANY_ROLE_NAME_NOT_PRESENT_ERROR = {code: 211, message: "Name not present"}
 
-    ASSET_NAME_TOO_LONG_ERROR = {code: 300, message: "%{count} is the maximum length"}
-    ASSET_NAME_TOO_SHORT_ERROR = {code: 301, message: "%{count} is the minimum length"}
+    ASSET_NAME_TOO_LONG_ERROR = {code: 300, message: "%{count} is the maximum asset name length"}
+    ASSET_NAME_TOO_SHORT_ERROR = {code: 301, message: "%{count} is the minimum asset name length"}
     ASSET_NAME_NOT_PRESENT_ERROR = {code: 302, message: "Not present"}
     ASSET_NOT_FOUND_ERROR = {code: 303, message: "Asset not found"}
     ALGORITHM_NOT_FOUND_ERROR = {code: 304, message: "Algorithm was not found for this asset"}
     WRONG_NUMBER_OF_FEATURES_ERROR = {code: 305, message: "Not enough number of features found"}
     WRONG_FEATURE_FORMAT_ERROR = {code: 306, message: "Features should be an array"}
 
-    ASSET_DESCRIPTION_TOO_LONG_ERROR = {code: 310, message: "%{count} is the maximum length"}
+    ASSET_DESCRIPTION_TOO_LONG_ERROR = {code: 310, message: "%{count} is the maximum asset description length"}
 
-    API_KEY_NAME_TOO_LONG_ERROR = {code: 400, message: "%{count} is the maximum length"}
+    API_KEY_NAME_TOO_LONG_ERROR = {code: 400, message: "%{count} is the maximum api key name length"}
     API_KEY_NAME_NOT_PRESENT_ERROR = {code: 401, message: "Not present"}
 
     FILE_NOT_VALID_ERROR = {code: 500, message: "File type is invalid"}
