@@ -16,6 +16,7 @@ module Resolvers
     option :order, type: Types::CustomTypes::UserTypes::UserOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order
     option :first, type: Int, default: 10, with: :apply_first
     option :skip, type: Int, default: 0, with: :apply_skip
+    option :ignore_users, type: [Int], with: :apply_ignore_users
     option :company_id, type: ID, with: :by_company
 
     scope do
@@ -23,6 +24,11 @@ module Resolvers
     end
 
     type [Types::CustomTypes::UserTypes::UserType], null: true
+
+    def apply_ignore_users(scope, value)
+      scope = scope.where.not(id: value) if value
+      scope
+    end
 
     def by_company(scope, value)
       object.nil? ? scope.where(company_id: value) : nil
@@ -33,7 +39,7 @@ module Resolvers
     end
 
     def apply_filter(scope, value)
-      scope = scope.where('first_name LIKE ? OR last_name LIKE ?', "%#{value[:name_contains]}%", "%#{value[:name_contains]}%") if value[:name_contains]
+      scope = scope.where('lower(first_name) LIKE ? OR lower(last_name) LIKE ?', "%#{value[:name_contains].downcase}%", "%#{value[:name_contains].downcase}%") if value[:name_contains]
       scope
     end
 
