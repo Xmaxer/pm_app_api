@@ -33,7 +33,7 @@ module Resolvers
     end
 
     def apply_filter(scope, value)
-      scope = scope.where('name LIKE ?', value[:name_contains]) if value[:name_contains]
+      scope = scope.where('first_name LIKE ? OR last_name LIKE ?', "%#{value[:name_contains]}%", "%#{value[:name_contains]}%") if value[:name_contains]
       scope
     end
 

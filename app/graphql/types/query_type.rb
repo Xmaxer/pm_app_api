@@ -8,5 +8,6 @@ module Types
     field :companies, resolver: Resolvers::CompaniesResolver
     field :api_keys, resolver: Resolvers::ApiKeysResolver
     field :assets, resolver: Resolvers::AssetsResolver
+    field :users, resolver: Resolvers::UsersResolver
   end
 end

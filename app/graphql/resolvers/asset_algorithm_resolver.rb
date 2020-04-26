@@ -6,7 +6,7 @@ module Resolvers
     def resolve
       asset = object
       return {asset: nil} if asset.nil?
-      asset.algorithm[:name]
+      if asset.algorithm.nil? then nil else asset.algorithm[:name] end
     end
   end
 end

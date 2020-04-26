@@ -12,6 +12,7 @@ module Types
         field :assets, resolver: Resolvers::AssetsResolver
         field :users, resolver: Resolvers::UsersResolver
         field :total_size, resolver: Resolvers::TotalCompanyDataSizeResolver
+        field :roles, resolver: Resolvers::CompanyRolesResolver
       end
     end
   end

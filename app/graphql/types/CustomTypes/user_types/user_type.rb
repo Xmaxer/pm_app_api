@@ -8,7 +8,7 @@ module Types
         field :email, String, null: false, description: "The user's registered email address."
         field :phone_number, String, null: true, description: "The user's phone number"
         field :companies, [Types::CustomTypes::CompanyTypes::CompanyType], null: true, description: "All the user companies"
-        field :roles, [Types::CustomTypes::UserTypes::UserRoleType], null: true
+        field :roles, [Types::CustomTypes::RoleTypes::RoleType], null: true
       end
     end
   end

@@ -15,5 +15,7 @@ module Types
     field :send_asset_data, mutation: Mutations::AssetMutations::SendDataMutation
     field :delete_api_key, mutation: Mutations::ApiKeysMutations::DeleteApiKeyMutation
     field :api_key, mutation: Mutations::ApiKeysMutations::ApiKeyMutation
+    field :role, mutation: Mutations::RoleMutations::RoleMutation
+    field :delete_role, mutation: Mutations::RoleMutations::DeleteRoleMutation
   end
 end
