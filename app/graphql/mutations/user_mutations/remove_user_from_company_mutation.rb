@@ -26,11 +26,11 @@ module Mutations
         else
           args[:role_ids].each do |role_id|
             role = user.user_company_roles.find_by({company: company, company_role_id: role_id})
-            role.destroy if !role.nil? and !role[:name].nil?
+            role.destroy unless role.nil?
           end
         end
 
-        user = company.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, json_agg(company_roles) as roles").group(:id).find_by(id: user.id)
+        user = company.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, coalesce(json_agg(company_roles) filter ( where company_roles.id is not null ), '[]') as roles").group(:id).unscope(:where).find_by(id: user.id)
 
         {company: company, user: user, success: true}
       end

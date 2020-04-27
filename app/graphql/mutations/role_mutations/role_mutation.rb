@@ -15,13 +15,7 @@ module Mutations
           role = CompanyRole.new(attrs)
           updated = role.valid? && role.save
         else
-          updated = false
-          if role[:name].nil?
-            role.colour = attrs[:colour]
-            updated = role.save(validate: false)
-          else
-            updated = role.update(attrs)
-          end
+          updated = role.update(attrs)
         end
 
         Exceptions::ExceptionHandler.to_graphql_execution_error_array(role.errors).each { |error| context.add_error(error) } unless updated

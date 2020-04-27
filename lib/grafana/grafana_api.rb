@@ -42,7 +42,7 @@ module Grafana
         response = http.request(request)
         response = JSON.parse(response.read_body)
         user_id = response["id"]
-        company.update_attributes(grafana_username: unique_name, grafana_password: password) unless user_id.nil?
+        company.update(grafana_username: unique_name, grafana_password: password) unless user_id.nil?
         user_id
       end
 

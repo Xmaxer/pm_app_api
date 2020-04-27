@@ -99,8 +99,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_172124) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["company_id"], name: "index_company_roles_on_company_id"
-    t.index ["company_id"], name: "unique_role_name_null_index", unique: true, where: "(name IS NULL)"
-    t.index ["name", "company_id"], name: "unique_role_name_index", unique: true, where: "(name IS NOT NULL)"
+    t.index ["name", "company_id"], name: "unique_role_name_index", unique: true
   end
 
   create_table "user_company_roles", force: :cascade do |t|

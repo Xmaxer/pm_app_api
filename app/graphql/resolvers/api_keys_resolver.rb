@@ -12,7 +12,7 @@ module Resolvers
 
     description "Gets a list of API keys accessible to the user"
 
-    scope { context[:current_user].api_keys.joins("left JOIN (select api_key_id, max(created_at) as last_used from api_key_histories group by api_key_id) as j on j.api_key_id = api_keys.id").select("api_keys.*, companies.name as company_name, j.last_used").where('api_keys.deleted = false') }
+    scope { context[:current_user].api_keys.joins("left JOIN (select api_key_id, max(created_at) as last_used from api_key_histories group by api_key_id) as j on j.api_key_id = api_keys.id").select("api_keys.*, companies.name as company_name, j.last_used").unscope(:where).where('api_keys.deleted = false') }
 
     option :filter, type: Types::CustomTypes::ApiKeyTypes::ApiKeysFilterType, with: :apply_filter
     option :order, type: Types::CustomTypes::ApiKeyTypes::ApiKeysOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order

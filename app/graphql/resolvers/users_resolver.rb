@@ -20,7 +20,7 @@ module Resolvers
     option :company_id, type: ID, with: :by_company
 
     scope do
-      object.nil? ? User.all : object.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, json_agg(company_roles) as roles").group(:id)
+      object.nil? ? User.all : object.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, coalesce(json_agg(company_roles) filter ( where company_roles.id is not null ), '[]') as roles").group(:id).unscope(:where)
     end
 
     type [Types::CustomTypes::UserTypes::UserType], null: true

@@ -19,7 +19,7 @@ module Mutations
           raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::FILE_NOT_VALID_ERROR) unless valid_file_types.include?(file.content_type)
         end
         
-        asset = context[:current_user].assets.find_by(id: args[:asset_id])
+        asset = context[:current_user].assets.unscope(:where).find_by(id: args[:asset_id])
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ASSET_NOT_FOUND_ERROR) if asset.nil?
 
         res = nil

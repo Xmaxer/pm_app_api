@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
 
   has_many :user_company_roles
-  has_many :companies, through: :user_company_roles
+  has_many :companies, -> (user_id) {unscope(:where).joins("left join user_company_roles on companies.id = user_company_roles.company_id").where("user_company_roles.user_id = ? or companies.user_id = ?", user_id, user_id).select("companies.*")}
   has_many :api_keys, through: :companies
   has_many :assets, through: :companies
 
