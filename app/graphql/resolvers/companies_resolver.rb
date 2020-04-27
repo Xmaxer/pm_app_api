@@ -26,7 +26,7 @@ module Resolvers
     end
 
     def apply_filter(scope, value)
-      scope = scope.where('name LIKE ?', value[:name_contains]) if value[:name_contains]
+      scope = scope.where('lower(name) LIKE ?', "%#{value[:name_contains].downcase}%") if value[:name_contains]
       scope
     end
 

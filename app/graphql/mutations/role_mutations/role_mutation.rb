@@ -13,11 +13,18 @@ module Mutations
         if role.nil?
           attrs[:company_id] = args[:role_details][:company_id]
           role = CompanyRole.new(attrs)
+          updated = role.valid? && role.save
         else
-          role.attributes = attrs
+          updated = false
+          if role[:name].nil?
+            role.colour = attrs[:colour]
+            updated = role.save(validate: false)
+          else
+            updated = role.update(attrs)
+          end
         end
 
-        Exceptions::ExceptionHandler.to_graphql_execution_error_array(role.errors).each { |error| context.add_error(error) } unless role.valid? && role.save
+        Exceptions::ExceptionHandler.to_graphql_execution_error_array(role.errors).each { |error| context.add_error(error) } unless updated
         return {company: nil} if role.id.nil?
         {role: role}
       end

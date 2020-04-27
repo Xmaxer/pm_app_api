@@ -17,5 +17,6 @@ module Types
     field :api_key, mutation: Mutations::ApiKeysMutations::ApiKeyMutation
     field :role, mutation: Mutations::RoleMutations::RoleMutation
     field :delete_role, mutation: Mutations::RoleMutations::DeleteRoleMutation
+    field :user, mutation: Mutations::UserMutations::UserMutation
   end
 end

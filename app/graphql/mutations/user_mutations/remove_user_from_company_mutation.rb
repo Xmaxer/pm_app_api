@@ -5,7 +5,7 @@ module Mutations
 
       argument :user_id, ID, required: true, description: "The user to remove from the company"
       argument :company_id, ID, required: true, description: "The company to remove the user from."
-      argument :role_ids, [ID], required: true, description: "The specific role to remove"
+      argument :role_ids, [ID], required: false, description: "The specific role to remove"
       argument :purge, Boolean, required: false, description: "To completely remove the user or not from the company entirely"
 
       field :company, Types::CustomTypes::CompanyTypes::CompanyType, null: true, description: "The company the user was removed from"
@@ -22,11 +22,11 @@ module Mutations
 
         if args[:purge]
           role = user.user_company_roles.where({company: company})
-          role.destroy unless role.nil?
+          role.destroy_all unless role.nil?
         else
           args[:role_ids].each do |role_id|
             role = user.user_company_roles.find_by({company: company, company_role_id: role_id})
-            role.destroy unless role.nil?
+            role.destroy if !role.nil? and !role[:name].nil?
           end
         end
 

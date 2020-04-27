@@ -9,5 +9,6 @@ module Types
     field :api_keys, resolver: Resolvers::ApiKeysResolver
     field :assets, resolver: Resolvers::AssetsResolver
     field :users, resolver: Resolvers::UsersResolver
+    field :api_key, resolver: Resolvers::ApiKeyResolver
   end
 end
