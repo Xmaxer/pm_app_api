@@ -17,9 +17,9 @@ module Mutations
         else
           updated = role.update(attrs)
         end
-
+        context.scoped_context[:company] = role.company
         Exceptions::ExceptionHandler.to_graphql_execution_error_array(role.errors).each { |error| context.add_error(error) } unless updated
-        return {company: nil} if role.id.nil?
+        return {role: nil} if role.id.nil?
         {role: role}
       end
     end

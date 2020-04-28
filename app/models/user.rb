@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   def actual_companies
     user = User.find_by(id: self.id)
-    Company.where(id: user.companies.ids).or(Company.where(id: Company.where(user_id: user.id).ids))
+    Company.where(id: user.companies.ids, deleted: false).or(Company.where(id: Company.where(user_id: user.id).ids, deleted: false))
   end
 
   def get_decrypted_secret_key

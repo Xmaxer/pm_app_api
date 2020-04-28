@@ -12,7 +12,7 @@ module Resolvers
 
     description "Gets a list of companies belonging to user"
 
-    scope { context[:current_user].companies.where(deleted: false) }
+    scope { context[:current_user].actual_companies }
 
     option :filter, type: Types::CustomTypes::CompanyTypes::CompanyFilterType, with: :apply_filter
     option :order, type: Types::CustomTypes::CompanyTypes::CompanyOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order

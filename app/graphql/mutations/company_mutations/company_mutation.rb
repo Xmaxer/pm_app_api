@@ -14,16 +14,18 @@ module Mutations
         if company.new_record?
           attrs[:user_id] = args[:user_id]
           company = Company.new(attrs)
+          updated = company.valid? && company.save
         else
-          company.attributes = attrs
+          updated = company.update(attrs)
         end
 
-        Exceptions::ExceptionHandler.to_graphql_execution_error_array(company.errors).each { |error| context.add_error(error) } unless company.valid? && company.save
+        Exceptions::ExceptionHandler.to_graphql_execution_error_array(company.errors).each { |error| context.add_error(error) } unless updated
         return {company: nil} if company.id.nil?
 
-        success = Grafana::GrafanaApi.create_dashboard(company)
-        raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::GRAFANA_DASHBOARD_FAILED) unless success
-
+        if company[:dashboard_url].nil?
+          success = Grafana::GrafanaApi.create_dashboard(company)
+          raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::GRAFANA_DASHBOARD_FAILED) unless success
+        end
         {company: Company.find_by(id: company.id)}
       end
     end

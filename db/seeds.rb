@@ -41,7 +41,7 @@ end
   role = roles.sample
   user_role = user.user_company_roles.new({company_role_id: role.id, company: role.company})
   user_role.save
-  key = user.api_keys.new({name: "My Api key " + i.to_s, company_id: role.company.id})
+  key = ApiKey.new({name: "My Api key " + i.to_s, company_id: role.company.id, user_id: user.id})
   key.save
 end
 

@@ -9,15 +9,17 @@ module Mutations
 
       def resolve(**args)
         args[:user_id] = context[:current_user].id
-        asset = Asset.find_or_initialize_by(id: args[:asset_details][:id])
-        attrs = args[:asset_details].to_h
-        if asset.new_record?
+        asset = Asset.find_by(id: args[:asset_details][:id])
+        attrs = args[:asset_details].to_h.except(:id, :company_id)
+        if asset.nil?
           attrs[:user_id] = args[:user_id]
+          attrs[:company_id] = args[:asset_details][:company_id]
           asset = Asset.new(attrs)
+          updated = asset.valid? && asset.save
         else
-          asset.attributes = attrs
+          updated = asset.update(attrs)
         end
-        return {asset: asset} if asset.valid? && asset.save
+        return {asset: asset} if updated
         Exceptions::ExceptionHandler.to_graphql_execution_error_array(asset.errors).each { |error| context.add_error(error) }
         {asset: nil}
       end

@@ -14,7 +14,7 @@ class Company < ApplicationRecord
 
   def actual_users
     company = Company.find_by(id: self.id)
-    User.where(id: company.users.ids).or(User.where(id: company.user.id))
+    User.where(id: company.users.ids, enabled: true).or(User.where(id: company.user.id, enabled: true))
   end
 
   private

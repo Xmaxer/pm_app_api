@@ -11,6 +11,7 @@ module Mutations
         role = CompanyRole.find_by(id: args[:id])
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::COMPANY_ROLE_DOES_NOT_EXIST_ERROR) if role.nil?
         role.destroy
+        context.scoped_context[:company] = role.company
         {role: role}
       end
     end
