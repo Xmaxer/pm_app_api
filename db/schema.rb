@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_172124) do
   end
 
   create_table "company_roles", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "colour", null: false
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false

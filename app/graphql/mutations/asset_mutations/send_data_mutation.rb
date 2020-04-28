@@ -9,7 +9,7 @@ module Mutations
 
       def resolve(**args)
         company = object
-        asset = company.assets.find_by(id: args[:asset_id])
+        asset = company.assets.unscope(:where).find_by(id: args[:asset_id])
 
         raise Exceptions::ExceptionHandler.to_graphql_execution_error(Constants::Errors::ASSET_NOT_FOUND_ERROR) if asset.nil?
 

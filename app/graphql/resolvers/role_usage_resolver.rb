@@ -4,7 +4,7 @@ module Resolvers
 
     type Int, null: false
     def resolve
-      object.user_company_roles.count
+      context.scoped_context[:company].user_company_roles.where(id: object.id).count
     end
   end
 end

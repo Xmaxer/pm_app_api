@@ -5,10 +5,17 @@ class Company < ApplicationRecord
   has_many :company_roles
   has_many :assets
   has_many :user_company_roles
-  has_many :users, -> (company) {unscope(:where).joins(sanitize_sql_array(["left join user_company_roles ON users.id = user_company_roles.user_id and user_company_roles.company_id = %s", company.id])).select("users.*")}
+  has_many :users, through: :user_company_roles
+
+
 
   validates :name, length: {maximum: 50, too_long: Constants::Errors::COMPANY_NAME_TOO_LONG_ERROR[:message]}, presence: {message: Constants::Errors::COMPANY_NAME_NOT_PRESENT_ERROR[:message]}
   validates :description, length: {maximum: 500, too_long: Constants::Errors::COMPANY_DESCRIPTION_TOO_LONG_ERROR[:message]}
+
+  def actual_users
+    company = Company.find_by(id: self.id)
+    User.where(id: company.users.ids).or(User.where(id: company.user.id))
+  end
 
   private
 

@@ -5,6 +5,7 @@ module Resolvers
     type [Types::CustomTypes::RoleTypes::RoleType], null: false
 
     def resolve
+      context.scoped_context[:company] = object
       object.company_roles
     end
   end

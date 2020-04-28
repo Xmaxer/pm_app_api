@@ -19,8 +19,15 @@ module Resolvers
     option :ignore_users, type: [Int], with: :apply_ignore_users
     option :company_id, type: ID, with: :by_company
 
+    def structurally_incompatible_values_for_or(other)
+      Relation::SINGLE_VALUE_METHODS.reject { |m| send("#{m}_value") == other.send("#{m}_value") } +
+          (Relation::MULTI_VALUE_METHODS - [:eager_load, :references, :extending]).reject { |m| send("#{m}_values") == other.send("#{m}_values") } +
+          (Relation::CLAUSE_METHODS - [:having, :where]).reject { |m| send("#{m}_clause") == other.send("#{m}_clause") }
+    end
+
     scope do
-      object.nil? ? User.all : object.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, coalesce(json_agg(company_roles) filter ( where company_roles.id is not null ), '[]') as roles").group(:id).unscope(:where)
+      context.scoped_context[:company] = object
+      object.nil? ? User.all : object.actual_users
     end
 
     type [Types::CustomTypes::UserTypes::UserType], null: true

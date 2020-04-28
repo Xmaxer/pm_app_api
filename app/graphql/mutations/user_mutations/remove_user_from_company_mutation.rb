@@ -29,9 +29,7 @@ module Mutations
             role.destroy unless role.nil?
           end
         end
-
-        user = company.users.joins("LEFT JOIN company_roles ON company_roles.id = user_company_roles.company_role_id").select("users.*, coalesce(json_agg(company_roles) filter ( where company_roles.id is not null ), '[]') as roles").group(:id).unscope(:where).find_by(id: user.id)
-
+        context.scoped_context[:company] = company
         {company: company, user: user, success: true}
       end
     end

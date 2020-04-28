@@ -6,14 +6,21 @@ class User < ApplicationRecord
 
 
   has_many :user_company_roles
-  has_many :companies, -> (user_id) {unscope(:where).joins("left join user_company_roles on companies.id = user_company_roles.company_id").where("user_company_roles.user_id = ? or companies.user_id = ?", user_id, user_id).select("companies.*")}
+  has_many :companies, through: :user_company_roles
   has_many :api_keys, through: :companies
   has_many :assets, through: :companies
+  has_many :company_roles, through: :user_company_roles
+
 
   validates :email, format: {with: /(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})/i, message: Constants::Errors::USER_EMAIL_NOT_VALID_ERROR[:message]}, presence: {message: Constants::Errors::USER_EMAIL_NOT_PRESENT_ERROR[:message]}, uniqueness: {message: Constants::Errors::USER_EMAIL_NOT_UNIQUE_ERROR[:message], case_sensitive: false}
   validates :first_name, length: {in: 2..30, too_long: Constants::Errors::USER_FIRST_NAME_TOO_LONG_ERROR[:message], too_short: Constants::Errors::USER_FIRST_NAME_TOO_SHORT_ERROR[:message]}, presence: {message: Constants::Errors::USER_FIRST_NAME_NOT_PRESENT_ERROR[:message]}
   validates :last_name, length: {in: 2..30, too_long: Constants::Errors::USER_LAST_NAME_TOO_LONG_ERROR[:message], too_short: Constants::Errors::USER_LAST_NAME_TOO_SHORT_ERROR[:message]}, allow_nil: true
   validates :password, presence: {message: Constants::Errors::USER_PASSWORD_NOT_PRESENT_ERROR[:message]}, length: {in: 6..50, too_long: Constants::Errors::USER_PASSWORD_TOO_LONG_ERROR[:message], too_short: Constants::Errors::USER_PASSWORD_TOO_SHORT_ERROR[:message]}, confirmation: {message: Constants::Errors::PASSWORD_CONFIRMATION_INVALID_ERROR[:message]}, if: :password
+
+  def actual_companies
+    user = User.find_by(id: self.id)
+    Company.where(id: user.companies.ids).or(Company.where(id: Company.where(user_id: user.id).ids))
+  end
 
   def get_decrypted_secret_key
     Authentication::Encryptor.decrypt(secret_key)
