@@ -22,6 +22,11 @@ class User < ApplicationRecord
     Company.where(id: user.companies.ids, deleted: false).or(Company.where(id: Company.where(user_id: user.id).ids, deleted: false))
   end
 
+  def actual_api_keys
+    user = User.find_by(id: self.id)
+    ApiKey.where(id: user.api_keys.ids, deleted: false).or(ApiKey.where(id: ApiKey.where(user_id: user.id).ids, deleted: false))
+  end
+
   def get_decrypted_secret_key
     Authentication::Encryptor.decrypt(secret_key)
   end

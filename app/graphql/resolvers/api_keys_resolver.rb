@@ -12,7 +12,7 @@ module Resolvers
 
     description "Gets a list of API keys accessible to the user"
 
-    scope { context[:current_user].api_keys }
+    scope { context[:current_user].actual_api_keys }
 
     option :filter, type: Types::CustomTypes::ApiKeyTypes::ApiKeysFilterType, with: :apply_filter
     option :order, type: Types::CustomTypes::ApiKeyTypes::ApiKeysOrderType, default: {by: "ID", direction: "DESC"}, with: :apply_order
